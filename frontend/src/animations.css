@@ -1,0 +1,931 @@
+/* =============================================================
+   STOCKFLOW MOTION SYSTEM
+   One consolidated stylesheet. Keep index.css for base layout.
+   Includes: circular logo assembly, page icons, dashboard,
+   product interactions, search, settings save and logout.
+============================================================= */
+
+/* ------------------------- Keyframes ---------------------- */
+@keyframes sfFadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes sfFadeDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes sfFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes sfModalIn {
+  from { opacity: 0; transform: translateY(16px) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes sfIconPop {
+  0% { opacity: 0; transform: scale(0.72); }
+  72% { opacity: 1; transform: scale(1.08); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes sfSidebarIn {
+  from { opacity: 0; transform: translateX(-12px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* -------------------------------------------------------------
+   1. STOCKFLOW LOGO — circular assembly inspired by reference
+   The purple rounded-square and three-cube mark remain intact.
+------------------------------------------------------------- */
+
+.sf-brand-logo {
+  position: relative !important;
+  display: grid !important;
+  flex: 0 0 auto;
+  place-items: center;
+  overflow: visible !important;
+  isolation: isolate;
+  background: #5b55d9 !important;
+  background-image: none !important;
+  color: #fff !important;
+  border: 0 !important;
+  border-radius: 13px !important;
+  box-shadow: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.sidebar-brand-mark {
+  width: 42px;
+  height: 42px;
+  border-radius: 13px !important;
+  animation: sfLogoTileReveal 0.58s cubic-bezier(0.2, 0.8, 0.25, 1) both;
+}
+
+.sf-brand-symbol {
+  position: relative;
+  z-index: 4;
+  display: block;
+  width: 32px;
+  height: 32px;
+  overflow: visible;
+  background: transparent !important;
+  fill: none !important;
+  transform-origin: 50% 50%;
+  animation: sfSymbolRotation 1.65s cubic-bezier(0.22, 0.72, 0.2, 1) both;
+}
+
+.sf-brand-symbol g {
+  fill: none !important;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.sf-brand-symbol path {
+  fill: none !important;
+  stroke: #fff !important;
+  stroke-width: 2.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 112;
+  stroke-dashoffset: 112;
+  animation: sfCubeStroke 0.78s ease-out both;
+}
+
+.sf-logo-cube {
+  opacity: 0;
+}
+
+.sf-logo-cube-top {
+  animation: sfCubeTopAssembly 0.95s cubic-bezier(0.2, 0.8, 0.25, 1) 0.12s both;
+}
+
+.sf-logo-cube-left {
+  animation: sfCubeLeftAssembly 0.95s cubic-bezier(0.2, 0.8, 0.25, 1) 0.22s both;
+}
+
+.sf-logo-cube-right {
+  animation: sfCubeRightAssembly 0.95s cubic-bezier(0.2, 0.8, 0.25, 1) 0.32s both;
+}
+
+.sf-logo-cube-top path { animation-delay: 0.12s; }
+.sf-logo-cube-left path { animation-delay: 0.22s; }
+.sf-logo-cube-right path { animation-delay: 0.32s; }
+
+@keyframes sfLogoTileReveal {
+  0% { opacity: 0; transform: scale(0.72) rotate(-12deg); box-shadow: 0 0 22px rgba(91, 85, 217, 0.45); }
+  70% { opacity: 1; transform: scale(1.08) rotate(3deg); }
+  100% { opacity: 1; transform: scale(1) rotate(0); box-shadow: 0 0 0 rgba(91, 85, 217, 0); }
+}
+
+@keyframes sfSymbolRotation {
+  0% { transform: rotate(-90deg) scale(0.72); }
+  65% { transform: rotate(390deg) scale(1.08); }
+  84% { transform: rotate(350deg) scale(0.98); }
+  100% { transform: rotate(360deg) scale(1); }
+}
+
+@keyframes sfCubeStroke {
+  0% { opacity: 0; stroke-dashoffset: 112; }
+  20% { opacity: 1; }
+  100% { opacity: 1; stroke-dashoffset: 0; }
+}
+
+@keyframes sfCubeTopAssembly {
+  0% { opacity: 0; transform: translateY(-8px) scale(0.48) rotate(-75deg); }
+  70% { opacity: 1; transform: translateY(1px) scale(1.1) rotate(8deg); }
+  88% { transform: translateY(-1px) scale(0.98) rotate(-2deg); }
+  100% { opacity: 1; transform: translateY(0) scale(1) rotate(0); }
+}
+
+@keyframes sfCubeLeftAssembly {
+  0% { opacity: 0; transform: translate(-9px, 7px) scale(0.45) rotate(-85deg); }
+  70% { opacity: 1; transform: translate(1px, -1px) scale(1.1) rotate(8deg); }
+  88% { transform: translate(-1px, 1px) scale(0.98) rotate(-2deg); }
+  100% { opacity: 1; transform: translate(0) scale(1) rotate(0); }
+}
+
+@keyframes sfCubeRightAssembly {
+  0% { opacity: 0; transform: translate(9px, 7px) scale(0.45) rotate(85deg); }
+  70% { opacity: 1; transform: translate(-1px, -1px) scale(1.1) rotate(-8deg); }
+  88% { transform: translate(1px, 1px) scale(0.98) rotate(2deg); }
+  100% { opacity: 1; transform: translate(0) scale(1) rotate(0); }
+}
+
+/* Three circular strokes sweep into place like the reference clip. */
+.sf-logo-orbit {
+  position: absolute;
+  z-index: 2;
+  inset: -8px;
+  display: block;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.sf-logo-ring {
+  position: absolute;
+  display: block;
+  border-radius: 50%;
+  border: 1.5px solid transparent;
+  opacity: 0;
+  transform: rotate(-110deg) scale(0.72);
+}
+
+.sf-logo-ring-outer {
+  inset: 0;
+  border-top-color: rgba(156, 148, 255, 0.95);
+  border-right-color: rgba(220, 216, 255, 0.9);
+  border-bottom-color: rgba(156, 148, 255, 0.45);
+  animation: sfOrbitAssemble 1.65s cubic-bezier(0.22, 0.72, 0.2, 1) both;
+}
+
+.sf-logo-ring-middle {
+  inset: 4px;
+  border-width: 1.2px;
+  border-left-color: rgba(231, 228, 255, 0.95);
+  border-bottom-color: rgba(168, 160, 255, 0.75);
+  animation: sfOrbitAssembleReverse 1.55s cubic-bezier(0.22, 0.72, 0.2, 1) 0.1s both;
+}
+
+.sf-logo-ring-inner {
+  inset: 8px;
+  border-width: 1px;
+  border-top-color: rgba(255, 255, 255, 0.75);
+  border-right-color: rgba(191, 185, 255, 0.8);
+  animation: sfOrbitAssemble 1.35s ease 0.2s both;
+}
+
+@keyframes sfOrbitAssemble {
+  0% { opacity: 0; transform: rotate(-150deg) scale(0.68); clip-path: inset(0 48% 0 48%); }
+  24% { opacity: 1; }
+  72% { opacity: 0.95; transform: rotate(265deg) scale(1.08); clip-path: inset(0 0 0 0); }
+  100% { opacity: 0; transform: rotate(360deg) scale(1.13); clip-path: inset(0 0 0 0); }
+}
+
+@keyframes sfOrbitAssembleReverse {
+  0% { opacity: 0; transform: rotate(130deg) scale(0.75); }
+  25% { opacity: 0.9; }
+  75% { opacity: 0.72; transform: rotate(-260deg) scale(1.05); }
+  100% { opacity: 0; transform: rotate(-360deg) scale(1.12); }
+}
+
+.sf-logo-orbit-dot {
+  position: absolute;
+  top: -2px;
+  left: 50%;
+  z-index: 3;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 7px #fff, 0 0 14px #aaa2ff;
+  animation: sfOrbitDot 1.65s ease-in-out both;
+}
+
+.sf-logo-orbit-dot-two {
+  top: auto;
+  right: 1px;
+  bottom: 12px;
+  left: auto;
+  width: 4px;
+  height: 4px;
+  animation-delay: 0.12s;
+}
+
+@keyframes sfOrbitDot {
+  0% { opacity: 0; transform: rotate(0) translateX(0) scale(0.5); }
+  20% { opacity: 1; }
+  80% { opacity: 0.85; }
+  100% { opacity: 0; transform: rotate(360deg) translateX(30px) scale(0.8); }
+}
+
+/* Soft particle/smoke haze follows the circular sweep. */
+.sf-logo-particle-trail {
+  position: absolute;
+  z-index: 1;
+  inset: -10px;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.sf-logo-particle-trail::before,
+.sf-logo-particle-trail::after {
+  position: absolute;
+  inset: 2px;
+  border-radius: 50%;
+  content: "";
+  opacity: 0;
+  background:
+    radial-gradient(circle at 12% 28%, rgba(214, 210, 255, 0.72), transparent 18%),
+    radial-gradient(circle at 86% 35%, rgba(166, 157, 255, 0.65), transparent 22%),
+    radial-gradient(circle at 62% 92%, rgba(193, 187, 255, 0.52), transparent 20%);
+  filter: blur(6px);
+  animation: sfLogoParticles 1.55s ease-out both;
+}
+
+.sf-logo-particle-trail::after {
+  inset: -4px;
+  filter: blur(9px);
+  animation-delay: 0.16s;
+}
+
+@keyframes sfLogoParticles {
+  0% { opacity: 0; transform: scale(0.68) rotate(-45deg); }
+  35% { opacity: 0.85; }
+  75% { opacity: 0.48; transform: scale(1.12) rotate(240deg); }
+  100% { opacity: 0; transform: scale(1.2) rotate(360deg); }
+}
+
+.sf-logo-flash {
+  position: absolute;
+  z-index: 5;
+  inset: -4px;
+  border: 1px solid rgba(230, 227, 255, 0.82);
+  border-radius: 16px;
+  box-shadow: 0 0 18px rgba(185, 178, 255, 0.55);
+  pointer-events: none;
+  opacity: 0;
+  animation: sfLogoFinalFlash 0.7s ease 0.72s both;
+}
+
+@keyframes sfLogoFinalFlash {
+  0% { opacity: 0; transform: scale(0.92); }
+  42% { opacity: 0.85; transform: scale(1.1); }
+  100% { opacity: 0; transform: scale(1.25); }
+}
+
+.sidebar-brand-name {
+  animation: sfBrandNameReveal 0.65s ease 0.35s both;
+}
+
+@keyframes sfBrandNameReveal {
+  from { opacity: 0; transform: translateX(-7px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* Second logo repeats the same assembly on the top-right. */
+.topbar-brand-mark {
+  width: 30px;
+  height: 30px;
+  border-radius: 9px !important;
+  animation: sfLogoTileReveal 0.58s cubic-bezier(0.2, 0.8, 0.25, 1) 1.25s both;
+}
+
+.topbar-brand-mark .sf-brand-symbol {
+  width: 23px;
+  height: 23px;
+  animation-delay: 1.3s;
+}
+
+.topbar-brand-mark .sf-logo-cube-top { animation-delay: 1.38s; }
+.topbar-brand-mark .sf-logo-cube-left { animation-delay: 1.48s; }
+.topbar-brand-mark .sf-logo-cube-right { animation-delay: 1.58s; }
+.topbar-brand-mark .sf-logo-cube-top path { animation-delay: 1.38s; }
+.topbar-brand-mark .sf-logo-cube-left path { animation-delay: 1.48s; }
+.topbar-brand-mark .sf-logo-cube-right path { animation-delay: 1.58s; }
+.topbar-brand-mark .sf-logo-ring-outer { animation-delay: 1.3s; }
+.topbar-brand-mark .sf-logo-ring-middle { animation-delay: 1.4s; }
+.topbar-brand-mark .sf-logo-ring-inner { animation-delay: 1.5s; }
+.topbar-brand-mark .sf-logo-orbit-dot { animation-delay: 1.3s; }
+.topbar-brand-mark .sf-logo-orbit-dot-two { animation-delay: 1.42s; }
+.topbar-brand-mark .sf-logo-particle-trail::before { animation-delay: 1.3s; }
+.topbar-brand-mark .sf-logo-particle-trail::after { animation-delay: 1.46s; }
+.topbar-brand-mark .sf-logo-flash { animation-delay: 2.02s; }
+
+/* -------------------------------------------------------------
+   2. TOP BAR AND GENERAL PAGE ENTRANCE
+------------------------------------------------------------- */
+.sidebar { animation: sfSidebarIn 0.45s ease both; }
+.topbar { animation: sfFadeDown 0.45s ease both; }
+.topbar-intro-text { animation: sfFadeUp 0.65s ease 0.35s both; }
+.page-heading { animation: sfFadeUp 0.5s ease both; }
+
+/* Mobile drawer: logo assembles only when it becomes visible. */
+@media (max-width: 760px) {
+  .sidebar:not(.sidebar-open) .sidebar-brand-mark,
+  .sidebar:not(.sidebar-open) .sidebar-brand-mark * {
+    animation: none !important;
+  }
+  .sidebar:not(.sidebar-open) .sf-logo-cube {
+    opacity: 1;
+  }
+  .sidebar.sidebar-open .sidebar-brand-mark {
+    animation: sfLogoTileReveal 0.58s ease both;
+  }
+  .topbar-brand-mark {
+    width: 27px;
+    height: 27px;
+  }
+  .topbar-brand-mark .sf-brand-symbol {
+    width: 21px;
+    height: 21px;
+  }
+}
+
+/* -------------------------------------------------------------
+   3. NAVIGATION ICONS
+------------------------------------------------------------- */
+.nav-link {
+  transition: transform 0.24s ease, background 0.24s ease, color 0.24s ease;
+}
+.nav-link:hover { transform: translateX(3px); }
+.nav-link-dashboard > svg {
+  color: #6556e8;
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+.nav-link-dashboard:hover > svg,
+.nav-link-dashboard.nav-link-active > svg {
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 5px rgba(101, 86, 232, 0.48));
+}
+.nav-link-products > svg {
+  color: #358bd2;
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+.nav-link-products:hover > svg,
+.nav-link-products.nav-link-active > svg {
+  transform: rotate(-7deg) scale(1.1);
+  filter: drop-shadow(0 0 5px rgba(53, 139, 210, 0.5));
+}
+.nav-link-settings > svg {
+  color: #786adf;
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+.nav-link-settings:hover > svg,
+.nav-link-settings.nav-link-active > svg {
+  transform: rotate(35deg);
+  filter: drop-shadow(0 0 5px rgba(120, 106, 223, 0.45));
+}
+
+/* -------------------------------------------------------------
+   4. PAGE TITLE ICON ASSEMBLY: DASHBOARD / PRODUCTS / SETTINGS
+------------------------------------------------------------- */
+.page-title-with-icon {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+
+.page-title-icon {
+  position: relative;
+  display: inline-grid;
+  isolation: isolate;
+  width: 43px;
+  height: 43px;
+  flex: 0 0 auto;
+  place-items: center;
+  isolation: isolate;
+  overflow: visible;
+  border: 1px solid transparent;
+  border-radius: 12px;
+}
+
+.page-title-icon::before,
+.page-title-icon::after {
+  position: absolute;
+  z-index: -1;
+  inset: -5px;
+  border: 1.5px solid transparent;
+  border-top-color: currentColor;
+  border-right-color: currentColor;
+  border-radius: 50%;
+  content: "";
+  pointer-events: none;
+  opacity: 0;
+  animation: sfPageIconOrbit 1.25s cubic-bezier(0.22, 0.72, 0.2, 1) both;
+}
+
+.page-title-icon::after {
+  inset: -2px;
+  border-width: 1px;
+  border-left-color: currentColor;
+  border-bottom-color: currentColor;
+  animation-delay: 0.12s;
+  animation-duration: 1.1s;
+}
+
+@keyframes sfPageIconOrbit {
+  0% { opacity: 0; transform: rotate(-110deg) scale(0.72); }
+  24% { opacity: 0.9; }
+  78% { opacity: 0.65; transform: rotate(260deg) scale(1.08); }
+  100% { opacity: 0; transform: rotate(360deg) scale(1.14); }
+}
+
+.dashboard-title-icon {
+  color: #6556e8;
+  background: #eeedff;
+  border-color: #dfdbff;
+  animation: sfIconPop 0.6s ease both;
+}
+
+.products-title-icon {
+  color: #358bd2;
+  background: #e9f4ff;
+  border-color: #d4eaff;
+  animation: sfIconPop 0.6s ease both;
+}
+
+.settings-title-icon {
+  color: #786adf;
+  background: #f0eeff;
+  border-color: #dfdcff;
+  animation: sfIconPop 0.6s ease both;
+}
+
+.settings-title-icon svg {
+  transform-origin: center;
+  animation: sfSettingsGear 1.05s cubic-bezier(0.2, 0.8, 0.25, 1) both;
+}
+
+@keyframes sfSettingsGear {
+  0% { opacity: 0; transform: rotate(-90deg) scale(0.65); }
+  72% { opacity: 1; transform: rotate(10deg) scale(1.08); }
+  100% { opacity: 1; transform: rotate(0) scale(1); }
+}
+
+.page-title-icon:hover {
+  transform: translateY(-2px) scale(1.04);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.dashboard-title-icon:hover { box-shadow: 0 0 18px rgba(101, 86, 232, 0.25); }
+.products-title-icon:hover { box-shadow: 0 0 18px rgba(53, 139, 210, 0.25); }
+.settings-title-icon:hover { box-shadow: 0 0 18px rgba(120, 106, 223, 0.25); }
+
+/* -------------------------------------------------------------
+   5. DASHBOARD METRIC GLOWS
+------------------------------------------------------------- */
+.stats-grid .stat-card {
+  opacity: 0;
+  animation: sfFadeUp 0.58s ease forwards;
+  transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
+}
+.stats-grid .stat-card:nth-child(1) { animation-delay: 0.06s; }
+.stats-grid .stat-card:nth-child(2) { animation-delay: 0.15s; }
+.stats-grid .stat-card:nth-child(3) { animation-delay: 0.24s; }
+
+.stat-card-products:hover {
+  transform: translateY(-4px);
+  border-color: #d8d2ff;
+  box-shadow: 0 12px 28px rgba(111, 91, 245, 0.13);
+}
+.stat-card-units:hover {
+  transform: translateY(-4px);
+  border-color: #c9e4ff;
+  box-shadow: 0 12px 28px rgba(52, 142, 220, 0.13);
+}
+.stat-card-low-stock:hover {
+  transform: translateY(-4px);
+  border-color: #ffd0d0;
+  box-shadow: 0 12px 28px rgba(228, 72, 82, 0.13);
+}
+
+@keyframes sfPurpleGlow {
+  0%, 100% { text-shadow: 0 0 0 rgba(102, 86, 240, 0); }
+  50% { text-shadow: 0 0 7px rgba(102, 86, 240, 0.48), 0 0 15px rgba(102, 86, 240, 0.2); }
+}
+@keyframes sfBlueGlow {
+  0%, 100% { text-shadow: 0 0 0 rgba(51, 143, 225, 0); }
+  50% { text-shadow: 0 0 7px rgba(51, 143, 225, 0.48), 0 0 15px rgba(51, 143, 225, 0.2); }
+}
+@keyframes sfRedGlow {
+  0%, 100% { text-shadow: 0 0 0 rgba(221, 65, 76, 0); }
+  50% { text-shadow: 0 0 7px rgba(221, 65, 76, 0.48), 0 0 15px rgba(221, 65, 76, 0.2); }
+}
+
+.stat-label-products { color: #6656e8 !important; animation: sfPurpleGlow 2.8s ease-in-out infinite; }
+.stat-label-units { color: #358bd2 !important; animation: sfBlueGlow 2.8s ease-in-out infinite; }
+.stat-label-low-stock { color: #dc4853 !important; animation: sfRedGlow 2.4s ease-in-out infinite; }
+
+.stat-card .stat-icon { transition: transform 0.28s ease, box-shadow 0.28s ease; }
+.stat-card:hover .stat-icon { transform: rotate(-5deg) scale(1.08); }
+.stat-card-products:hover .stat-icon { box-shadow: 0 0 17px rgba(111, 91, 245, 0.25); }
+.stat-card-units:hover .stat-icon { box-shadow: 0 0 17px rgba(52, 142, 220, 0.25); }
+.stat-card-low-stock:hover .stat-icon { box-shadow: 0 0 17px rgba(228, 72, 82, 0.25); }
+.stat-icon-red { background: #fff0f0 !important; color: #df454f !important; border: 1px solid #ffdddd; }
+
+/* Low-stock alert heading and product name */
+.low-stock-panel { animation: sfFadeUp 0.58s ease 0.2s both; }
+.low-stock-heading,
+.low-stock-product-name {
+  color: #d9434d !important;
+  animation: sfRedGlow 2.35s ease-in-out infinite;
+}
+.low-stock-product-name { font-weight: 800 !important; }
+.status-low {
+  border: 1px solid rgba(221, 70, 80, 0.13);
+  background: #fff0f0 !important;
+  color: #d9434d !important;
+  box-shadow: 0 0 9px rgba(221, 70, 80, 0.08);
+}
+
+/* -------------------------------------------------------------
+   6. ADD PRODUCT — BOX PARTICLE AURA
+------------------------------------------------------------- */
+.add-product-button { position: relative; isolation: isolate; overflow: visible; }
+.add-product-button::before,
+.add-product-button::after {
+  position: absolute;
+  z-index: -1;
+  inset: -5px;
+  border: 1px solid rgba(126, 115, 255, 0.55);
+  border-radius: 12px;
+  content: "";
+  opacity: 0;
+  pointer-events: none;
+}
+.add-product-aura-active::before { animation: sfButtonAura 0.85s ease-out both; }
+.add-product-aura-active::after { animation: sfButtonAura 0.85s ease-out 0.12s both; }
+
+@keyframes sfButtonAura {
+  0% { opacity: 0.9; transform: scale(0.95); box-shadow: 0 0 8px rgba(126, 115, 255, 0.55); }
+  100% { opacity: 0; transform: scale(1.35); box-shadow: 0 0 30px rgba(126, 115, 255, 0); }
+}
+
+.stock-box-aura { position: absolute; z-index: 3; inset: 0; overflow: visible; pointer-events: none; }
+.aura-box { position: absolute; color: #c0baff; opacity: 0; filter: drop-shadow(0 0 6px rgba(130, 118, 255, 0.7)); }
+.add-product-aura-active .aura-box-one { animation: sfBoxParticleOne 0.85s ease-out both; }
+.add-product-aura-active .aura-box-two { animation: sfBoxParticleTwo 0.85s ease-out 0.04s both; }
+.add-product-aura-active .aura-box-three { animation: sfBoxParticleThree 0.85s ease-out 0.08s both; }
+
+@keyframes sfBoxParticleOne {
+  0% { opacity: 0; left: 42%; top: 35%; transform: scale(0.5); }
+  25% { opacity: 1; }
+  100% { opacity: 0; left: -12%; top: -65%; transform: scale(1.1) rotate(-30deg); }
+}
+@keyframes sfBoxParticleTwo {
+  0% { opacity: 0; left: 48%; top: 40%; transform: scale(0.5); }
+  25% { opacity: 1; }
+  100% { opacity: 0; left: 50%; top: -90%; transform: scale(1.15) rotate(20deg); }
+}
+@keyframes sfBoxParticleThree {
+  0% { opacity: 0; right: 42%; bottom: 35%; transform: scale(0.5); }
+  25% { opacity: 1; }
+  100% { opacity: 0; right: -12%; bottom: -65%; transform: scale(1.1) rotate(30deg); }
+}
+
+/* -------------------------------------------------------------
+   7. REFRESH BUTTON
+------------------------------------------------------------- */
+.refresh-button {
+  transition: color 0.24s ease, border-color 0.24s ease, background 0.24s ease, box-shadow 0.24s ease, transform 0.24s ease;
+}
+.refresh-button:hover:not(:disabled) {
+  border-color: #c9c3ff;
+  background: #f4f2ff;
+  color: #5b55d9;
+  box-shadow: 0 0 0 3px rgba(91, 85, 217, 0.07), 0 5px 16px rgba(91, 85, 217, 0.12);
+  transform: translateY(-2px);
+}
+.refresh-button:hover:not(:disabled) svg { animation: sfRefreshTurn 0.65s ease; }
+.refresh-button.is-refreshing svg { animation: sfRefreshSpin 0.85s linear infinite; }
+@keyframes sfRefreshTurn { from { transform: rotate(0); } to { transform: rotate(360deg); } }
+@keyframes sfRefreshSpin { to { transform: rotate(360deg); } }
+
+/* -------------------------------------------------------------
+   8. UNIQUE PRODUCT ICONS AND ACTIONS
+------------------------------------------------------------- */
+.data-table tbody tr { animation: sfFadeUp 0.38s ease both; }
+.data-table tbody tr:nth-child(1) { animation-delay: 0.04s; }
+.data-table tbody tr:nth-child(2) { animation-delay: 0.08s; }
+.data-table tbody tr:nth-child(3) { animation-delay: 0.12s; }
+.data-table tbody tr:nth-child(4) { animation-delay: 0.16s; }
+.data-table tbody tr:nth-child(5) { animation-delay: 0.2s; }
+
+.product-mini-icon { transition: transform 0.28s ease, box-shadow 0.28s ease; }
+.data-table tbody tr:hover .product-mini-icon { transform: translateY(-3px) rotate(-5deg); }
+.product-mini-icon svg { transition: transform 0.3s ease; }
+.product-icon-cable svg,
+.product-icon-audio svg,
+.product-icon-storage svg { animation: sfProductFloat 3s ease-in-out infinite; }
+.product-icon-mouse svg,
+.product-icon-gaming svg { animation: sfProductTilt 3.2s ease-in-out infinite; }
+.product-icon-keyboard svg { animation: sfProductKeys 2.8s ease-in-out infinite; }
+.product-icon-phone svg,
+.product-icon-tablet svg { animation: sfProductPhone 3.2s ease-in-out infinite; }
+.product-icon-watch svg { animation: sfProductTick 3s ease-in-out infinite; }
+.product-icon-camera svg { animation: sfProductCamera 3.4s ease-in-out infinite; }
+.product-icon-laptop svg,
+.product-icon-monitor svg { animation: sfProductScreen 3.2s ease-in-out infinite; }
+
+@keyframes sfProductFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+@keyframes sfProductTilt { 0%, 100% { transform: rotate(0); } 50% { transform: rotate(-7deg); } }
+@keyframes sfProductKeys { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(2px); } }
+@keyframes sfProductPhone { 0%, 100% { transform: rotate(0); } 50% { transform: rotate(5deg); } }
+@keyframes sfProductTick { 0%, 100% { transform: rotate(0); } 30% { transform: rotate(-12deg); } 60% { transform: rotate(12deg); } }
+@keyframes sfProductCamera { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08); } }
+@keyframes sfProductScreen { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-2px); } }
+
+.product-icon-tone-violet { background: #eeedff; border-color: #e1ddff; color: #6256d9; }
+.product-icon-tone-blue { background: #e9f4ff; border-color: #d9ebff; color: #358bd2; }
+.product-icon-tone-teal { background: #e7f8f5; border-color: #d2f0e9; color: #209b84; }
+.product-icon-tone-orange { background: #fff3e7; border-color: #ffead3; color: #dc8734; }
+.product-icon-tone-rose { background: #fff0f2; border-color: #ffdde2; color: #d95469; }
+.product-icon-tone-green { background: #eaf8ed; border-color: #d6f0dd; color: #26965a; }
+
+.edit-product-button { color: #5c65c9; transition: all 0.22s ease; }
+.edit-product-button:hover {
+  border-color: #d9dcff;
+  background: #f0f0ff;
+  color: #5550cf;
+  box-shadow: 0 0 13px rgba(92, 101, 201, 0.2);
+  transform: translateY(-2px) rotate(-7deg);
+}
+.delete-product-button { color: #d45a62; transition: all 0.22s ease; }
+.delete-product-button:hover {
+  border-color: #ffd2d5;
+  background: #fff0f1;
+  color: #d93645;
+  box-shadow: 0 0 13px rgba(217, 54, 69, 0.2);
+  transform: translateY(-2px) rotate(7deg);
+}
+
+/* -------------------------------------------------------------
+   9. SEARCH BAR — GLASS SLIDES ACROSS ON FOCUS
+------------------------------------------------------------- */
+.search-field-animated {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #e2e3ed;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+.search-field-animated > svg {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  left: 13px;
+  color: #9295a5;
+  transform: translateY(-50%);
+  transition: left 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), color 0.25s ease, filter 0.25s ease, transform 0.4s ease;
+}
+.search-field-animated input {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  min-width: 0;
+  padding-left: 31px;
+  transition: padding 0.38s ease;
+}
+.search-field-animated:focus-within {
+  border-color: #7065ee;
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(91, 85, 217, 0.12), 0 0 18px rgba(91, 85, 217, 0.15);
+  transform: translateY(-1px);
+}
+.search-field-animated:focus-within > svg {
+  left: calc(100% - 35px);
+  color: #5b55d9;
+  filter: drop-shadow(0 0 5px rgba(91, 85, 217, 0.55));
+  transform: translateY(-50%) rotate(360deg) scale(1.1);
+}
+.search-field-animated:focus-within input { padding-right: 32px; padding-left: 5px; }
+.search-field-animated input:focus-visible { outline: none; }
+
+/* -------------------------------------------------------------
+   10. SETTINGS — HEADING, PANEL, SAVE BUTTON AND LETTER BOX
+------------------------------------------------------------- */
+.settings-panel { animation: sfFadeUp 0.58s ease 0.12s both; }
+.settings-section-heading { animation: sfFadeUp 0.48s ease 0.08s both; }
+.settings-icon { animation: sfIconPop 0.55s ease 0.18s both; }
+.inventory-settings-title {
+  color: #5148bf;
+  text-shadow: 0 0 10px rgba(91, 85, 217, 0.16);
+  animation: sfPurpleGlow 3s ease-in-out infinite;
+}
+.settings-field-card {
+  border: 1px solid #e1defd;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #fff, #fcfbff);
+  box-shadow: 0 3px 12px rgba(91, 85, 217, 0.05);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+.settings-field-card:hover {
+  border-color: #bdb5ff;
+  box-shadow: 0 0 0 3px rgba(91, 85, 217, 0.06), 0 8px 23px rgba(91, 85, 217, 0.09);
+  transform: translateY(-2px);
+}
+.settings-field-card input:focus {
+  border-color: #655ae4;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(91, 85, 217, 0.13), 0 0 14px rgba(91, 85, 217, 0.12);
+}
+.settings-actions { animation: sfFadeUp 0.45s ease 0.18s both; }
+.settings-save-button {
+  position: relative;
+  isolation: isolate;
+  overflow: visible;
+  box-shadow: 0 4px 12px rgba(91, 85, 217, 0.12);
+}
+.settings-save-button::before {
+  position: absolute;
+  z-index: -1;
+  inset: -4px;
+  border: 1px solid rgba(130, 119, 255, 0.6);
+  border-radius: 11px;
+  content: "";
+  opacity: 0;
+}
+.settings-save-button:hover:not(:disabled) {
+  background: #4b45c5;
+  box-shadow: 0 0 0 4px rgba(91, 85, 217, 0.1), 0 0 24px rgba(91, 85, 217, 0.34);
+  transform: translateY(-2px);
+}
+.settings-save-button:hover:not(:disabled)::before { animation: sfSaveButtonPulse 1.2s ease-in-out infinite; }
+@keyframes sfSaveButtonPulse {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.06); }
+}
+
+.settings-delivery-toast {
+  position: fixed;
+  z-index: 80;
+  right: 24px;
+  bottom: 24px;
+  width: min(300px, calc(100vw - 32px));
+  padding: 15px 18px 17px;
+  border: 1px solid #dedbff;
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.97);
+  box-shadow: 0 15px 40px rgba(43, 39, 114, 0.16), 0 0 25px rgba(91, 85, 217, 0.1);
+  backdrop-filter: blur(12px);
+  animation: sfModalIn 0.38s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+.delivery-scene {
+  position: relative;
+  height: 112px;
+  overflow: hidden;
+  border-radius: 10px;
+  background: radial-gradient(circle at 50% 75%, rgba(105, 92, 232, 0.12), transparent 48%), linear-gradient(180deg, #fbfaff, #f3f1ff);
+}
+.delivery-paper {
+  position: absolute;
+  z-index: 4;
+  top: 4px;
+  left: 50%;
+  display: flex;
+  width: 49px;
+  height: 61px;
+  flex-direction: column;
+  gap: 7px;
+  padding: 12px 8px;
+  border: 1px solid #dcd9f6;
+  border-radius: 4px;
+  background: #fff;
+  box-shadow: 0 4px 11px rgba(35, 34, 82, 0.13);
+  animation: sfPaperPack 1.9s cubic-bezier(0.3, 0.7, 0.25, 1) both;
+}
+.delivery-paper span { display: block; width: 100%; height: 2px; border-radius: 3px; background: #b9b3ec; }
+.delivery-paper span:nth-child(2) { width: 76%; }
+.delivery-paper span:nth-child(3) { width: 55%; }
+@keyframes sfPaperPack {
+  0% { opacity: 0; transform: translate(-50%, -12px) rotate(-10deg) scale(0.8); }
+  15% { opacity: 1; transform: translate(-50%, 0) rotate(-7deg) scale(1); }
+  38% { opacity: 1; transform: translate(-50%, 8px) rotate(4deg) scale(0.95); }
+  68% { opacity: 1; transform: translate(-50%, 45px) rotate(10deg) scale(0.7); }
+  88%, 100% { opacity: 0; transform: translate(-50%, 61px) rotate(16deg) scale(0.48); }
+}
+.delivery-box { position: absolute; z-index: 3; bottom: 6px; left: 50%; width: 94px; height: 54px; transform: translateX(-50%); filter: drop-shadow(0 6px 5px rgba(74, 64, 162, 0.16)); }
+.delivery-box-back { position: absolute; top: 1px; left: 7px; width: 80px; height: 26px; border-radius: 5px 5px 0 0; background: #9990ed; }
+.delivery-box-body { position: absolute; z-index: 2; right: 3px; bottom: 0; left: 3px; height: 34px; border: 1px solid #7569d4; border-radius: 4px 4px 7px 7px; background: linear-gradient(135deg, #8d83e9, #685dd0); }
+.delivery-box-flap { position: absolute; z-index: 4; top: 9px; width: 48px; height: 24px; border: 1px solid #7064d4; background: #b1aaf4; }
+.delivery-box-flap-left { left: 1px; clip-path: polygon(0 0, 100% 0, 50% 100%); transform-origin: top left; animation: sfBoxFlap 1.9s ease both; }
+.delivery-box-flap-right { right: 1px; clip-path: polygon(0 0, 100% 0, 50% 100%); transform-origin: top right; animation: sfBoxFlap 1.9s ease both; }
+@keyframes sfBoxFlap { 0%, 42% { transform: rotateX(0); } 62%, 100% { transform: rotateX(72deg); } }
+.delivery-box-tape { position: absolute; z-index: 5; bottom: 1px; left: 50%; width: 10px; height: 34px; background: rgba(239, 235, 255, 0.5); transform: translateX(-50%); }
+.delivery-box-icon { position: absolute; z-index: 6; top: 23px; left: 50%; color: #fff; opacity: 0; transform: translate(-50%, 0) scale(0.5); animation: sfDeliveryIcon 1.9s ease both; }
+@keyframes sfDeliveryIcon { 0%, 55% { opacity: 0; transform: translate(-50%, 5px) scale(0.5); } 75%, 100% { opacity: 1; transform: translate(-50%, 0) scale(1); } }
+.delivery-spark { position: absolute; z-index: 5; color: #776ae7; opacity: 0; text-shadow: 0 0 9px rgba(119, 106, 231, 0.65); }
+.delivery-spark-one { top: 27px; left: 26px; animation: sfSparkle 1.7s ease 0.35s both; }
+.delivery-spark-two { top: 13px; right: 37px; animation: sfSparkle 1.7s ease 0.55s both; }
+.delivery-spark-three { right: 24px; bottom: 24px; animation: sfSparkle 1.7s ease 0.7s both; }
+@keyframes sfSparkle { 0%, 100% { opacity: 0; transform: scale(0.3) rotate(0); } 35%, 70% { opacity: 1; transform: scale(1.1) rotate(40deg); } }
+.delivery-message { display: flex; flex-direction: column; gap: 4px; padding: 11px 2px 0; text-align: center; }
+.delivery-message strong { color: #5148bf; font-size: 12px; font-weight: 800; }
+.delivery-message span { color: #85889a; font-size: 10px; }
+
+/* -------------------------------------------------------------
+   11. LOGOUT CONFIRMATION
+------------------------------------------------------------- */
+.logout-button { transition: color 0.24s ease, background 0.24s ease, transform 0.24s ease; }
+.logout-button:hover { color: #d93645 !important; background: #fff0f1 !important; transform: translateX(3px); }
+.logout-button:hover span,
+.logout-button:hover svg { color: #d93645 !important; }
+.logout-confirm-backdrop {
+  position: fixed;
+  z-index: 100;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(24, 24, 42, 0.48);
+  backdrop-filter: blur(5px);
+  animation: sfFadeIn 0.22s ease both;
+}
+.logout-confirm-modal {
+  width: min(100%, 390px);
+  padding: 28px 26px 23px;
+  border: 1px solid #e7e5f7;
+  border-radius: 17px;
+  background: #fff;
+  box-shadow: 0 20px 65px rgba(25, 24, 60, 0.2), 0 0 28px rgba(91, 85, 217, 0.08);
+  text-align: center;
+  animation: sfModalIn 0.32s ease both;
+}
+.logout-dialog-icon { display: grid; width: 55px; height: 55px; place-items: center; margin: 0 auto 16px; border: 1px solid #ffd9d9; border-radius: 16px; background: #fff0f0; color: #dc4853; }
+.logout-confirm-modal h2 { margin: 0; color: #292a38; font-family: "Manrope", sans-serif; font-size: 20px; font-weight: 800; }
+.logout-confirm-modal p { margin: 11px 0 24px; color: #858897; font-size: 12px; line-height: 1.7; }
+.logout-confirm-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 11px; }
+.logout-no-button,
+.logout-yes-button { display: inline-flex; min-height: 43px; align-items: center; justify-content: center; gap: 7px; border: 1px solid transparent; border-radius: 9px; color: #fff; font-size: 12px; font-weight: 700; transition: transform 0.22s ease, box-shadow 0.22s ease; }
+.logout-no-button { background: #dc4853; border-color: #d93d48; }
+.logout-yes-button { background: #1b9d5b; border-color: #16894f; }
+.logout-no-button:hover,
+.logout-yes-button:hover { transform: translateY(-2px); }
+.logout-no-button:hover { box-shadow: 0 5px 14px rgba(220, 72, 83, 0.26); }
+.logout-yes-button:hover { box-shadow: 0 5px 14px rgba(27, 157, 91, 0.26); }
+
+/* -------------------------------------------------------------
+   12. BUTTONS, MODALS, EMPTY STATES AND RESPONSIVE DETAILS
+------------------------------------------------------------- */
+.primary-button,
+.secondary-button,
+.icon-button { transition: transform 0.22s ease, box-shadow 0.22s ease, background 0.22s ease, border-color 0.22s ease; }
+.primary-button:hover:not(:disabled),
+.secondary-button:hover:not(:disabled) { transform: translateY(-2px); }
+.primary-button:active:not(:disabled),
+.secondary-button:active:not(:disabled) { transform: scale(0.98); }
+.content-panel { animation: sfFadeUp 0.58s ease 0.18s both; }
+.empty-state { animation: sfFadeUp 0.55s ease both; }
+.empty-state-icon { animation: sfIconPop 0.55s ease both; }
+.modal-backdrop { animation: sfFadeIn 0.2s ease both; }
+.product-modal { animation: sfModalIn 0.3s ease both; }
+.product-form input,
+.product-form textarea,
+.settings-form input { transition: border-color 0.22s ease, box-shadow 0.22s ease; }
+
+@media (max-width: 760px) {
+  .topbar-brand-mark { width: 27px; height: 27px; }
+  .topbar-brand-mark .sf-brand-symbol { width: 21px; height: 21px; }
+  .page-title-icon { width: 38px; height: 38px; }
+  .settings-delivery-toast { right: 12px; bottom: 12px; }
+}
+
+@media (max-width: 380px) {
+  .logout-confirm-modal { padding: 23px 18px; }
+  .logout-confirm-actions { grid-template-columns: 1fr; }
+}
+
+/* Respect user accessibility preferences. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
